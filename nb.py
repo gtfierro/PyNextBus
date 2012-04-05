@@ -53,9 +53,8 @@ class NB():
                , self.stops.keys()
                     )
     match = process.extractOne(string, stop_names)
-    stopName = self.stops.keys()[stop_names.index(match[0])]
-    print "Stop name:", stopName
-    print self.stops[stopName]
+    #stop name
+    return self.stops.keys()[stop_names.index(match[0])]
     
   def get_routes(self):
     '''
