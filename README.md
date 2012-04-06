@@ -12,6 +12,11 @@ Included in Python:
 * os
 * json
 
+##Features
+* indexing by stop (NextBus.com only indexes by the name of the line!)
+* caching of the stop index
+* fuzzy string matching, so instead of "Hearst Av. & Le Roy Av." you can just type "hearst leroy"
+
 ##Usage
 
 In python interpreter
