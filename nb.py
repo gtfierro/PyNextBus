@@ -111,4 +111,7 @@ class NB():
         predictions.append( (p.get('minutes'), route) )
     #sort by minutes
     sorted_predictions = sorted(predictions, key = lambda p: p[0] )
-    return sorted_predictions[:min(maxList, len(sorted_predictions))]
+    json_out = {}
+    for i in range(len(sorted_predictions)):
+      json_out[str(i)] = {'route': sorted_predictions[i][1], 'arrives': sorted_predictions[i][0] + ' minute(s)'}
+    return json_out
