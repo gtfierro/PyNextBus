@@ -61,13 +61,32 @@ predictions are available). Highest level keys assist in the ordering (0 is the 
 
 ##Example
 
-In python interpreter
+In python interpreter:
 
 ```
 import nb
 n = nb.NB('actransit') 
 stop = n.get_stop('hearst arch') 
 n.get_prediction(stop)
-=> [('1', u'65'), ('13', u'52')]
 ```
 
+In web browser:
+
+Visit ```localhost:5000/hearst leroy```
+
+Will return something along the lines of:
+
+```
+{
+  '0': 
+    {
+      'route': u'52',
+      'arrives': '1 minute(s)'
+    },
+
+  '1': 
+    {
+      'route': u'52',
+      'arrives': '25 minute(s)'
+    }
+```
