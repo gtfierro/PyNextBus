@@ -24,18 +24,22 @@ class NB():
       #load from JSON file
       with open("."+agency) as f:
         _jsonfile = json.loads(f.read())
-      pass
     self.agency = agency
     self.SOURCE_URL = _jsonfile['SOURCE_URL'] if load else 'http://webservices.nextbus.com/service/publicXMLFeed?a=actransit'
     self.routes = _jsonfile['routes'] if load else self.get_routes()
     self.stops = _jsonfile['stops'] if load else self.get_stops(self.routes)
-    _jsonfile = ['SOURCE_URL','routes','stops']
+    self.cache_file = _jsonfile['cache_file'] if load else ".cache"
+    _jsonfile = ['SOURCE_URL','routes','stops','cache_file']
     if not load:
       with open("."+agency, 'w') as f:
         d = {}
         for key in _jsonfile:
           d[key] = getattr(self,key)
         f.write(json.dumps(d))
+      with open(self.cache_file, 'w') as f:
+        d = {}
+        f.write(json.dumps(d))
+
 
   def get_stop(self, string):
     '''
@@ -49,13 +53,22 @@ class NB():
                                     .replace(' av ',' ')
                                     .replace(' blvd ',' ')
                                     .replace(' & ',' ')
-                                    .replace(' dr ',' ').strip()
+                                    .replace(' dr ',' ').strip().lower()
                , self.stops.keys()
                     )
-    match = process.extractOne(string, stop_names)
-    #stop name
-    return self.stops.keys()[stop_names.index(match[0])]
-    
+    with open(self.cache_file) as f:
+      _jsoncache = json.loads(f.read())
+      if string.lower() not in _jsoncache.keys():
+        match = process.extractOne(string, stop_names)
+        #stop name
+        stopName = self.stops.keys()[stop_names.index(match[0])]
+        _jsoncache[string] = stopName
+      else:
+        return _jsoncache[string]
+    with open(self.cache_file,'w') as f:
+      f.write(json.dumps(_jsoncache))
+    return stopName
+
   def get_routes(self):
     '''
     Returns a list of all routes for the agency
