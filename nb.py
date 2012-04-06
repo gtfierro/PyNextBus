@@ -37,7 +37,7 @@ class NB():
           d[key] = getattr(self,key)
         f.write(json.dumps(d))
 
-  def stop_matcher(self, string):
+  def get_stop(self, string):
     '''
     returns the closest matching stop from the input string.
     We query from a list of stops we know exist
@@ -95,3 +95,20 @@ class NB():
         else:
           stop_dict[stopName]['routes'].append(route)
     return stop_dict
+
+  def get_prediction(self, stop, maxList=3):
+    '''
+    Input the *full* name of the stop, gives sorted list of arriving buses (defaults to top 3)
+    '''
+    stopID = self.stops[stop]['stopID']
+    PREDICTION_URL = self.SOURCE_URL+"&command=predictions&stopId="+stopID+"&r="
+    predictions = []
+    for route in self.stops[stop]['routes']:
+      html = requests.get(PREDICTION_URL+route).text
+      xml = et.XML(html).getchildren()[0].getchildren()[0]
+      predictions_route = xml.getchildren()
+      for p in predictions_route:
+        predictions.append( (p.get('minutes'), route) )
+    #sort by minutes
+    sorted_predictions = sorted(predictions, key = lambda p: p[0] )
+    return sorted_predictions[:min(maxList, len(sorted_predictions))]
