@@ -15,7 +15,8 @@ Included in Python:
 ##Usage
 
 In python interpreter
-```python
+
+```
 import nb
 n = nb.NB('actransit') 
 stop = n.get_stop('hearst arch') 
