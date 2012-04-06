@@ -5,6 +5,7 @@ This is an attempt to provide a simple, human-accessible API for nextbus that do
 ##Requirements
 * requests (http://docs.python-requests.org/en/latest/index.html)
 * fuzzywuzzy (https://github.com/seatgeek/fuzzywuzzy)
+* flask (http://flask.pocoo.org/)
 
 Included in Python:
 
@@ -16,6 +17,8 @@ Included in Python:
 * indexing by stop (NextBus.com only indexes by the name of the line!)
 * caching of the stop index
 * fuzzy string matching, so instead of "Hearst Av. & Le Roy Av." you can just type "hearst leroy"
+* *really* basic web interface: just type ```python web.py``` and go to ```localhost:5000/stop I want predictions for```.
+  Go ahead and leave the spaces in!
 
 ##Usage
 
