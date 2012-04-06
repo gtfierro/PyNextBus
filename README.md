@@ -20,7 +20,46 @@ Included in Python:
 * *really* basic web interface: just type ```python web.py``` and go to ```localhost:5000/stop I want predictions for```.
   Go ahead and leave the spaces in!
 
-##Usage
+##Functions
+
+####get_routes()
+Returns list of available routes for the provided agency (defaults to 'actransit')
+
+####get_stops(routes)
+Returns a dict for all the routes provided as input. This is easily convertable to JSON.
+
+```
+{ 
+  'full stop name':
+  {
+   'stopID': id number,
+   'routes': [list, of, routes, for, this, stop]
+  }
+}
+```
+
+####get_stop(string)
+Returns the (official) full stop name. Uses fuzzy string matching to find the closest match. Use the returned
+full stop name to index into the ```stops``` dict (if you're using the interpreter).
+
+####get_prediction(stop, maxList=3)
+Returns a dict of the predictions for the given stop (returns the min of ```maxList``` and how many
+predictions are available). Highest level keys assist in the ordering (0 is the closest bus, 1 is the next closest bus, etc).
+
+```
+{
+  '0':
+    {
+      'route': name of route,
+      'arrives': ETA in minutes
+    }
+  '1':
+    ...
+}
+```
+
+
+##Example
 
 In python interpreter
 
