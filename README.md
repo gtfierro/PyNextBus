@@ -19,6 +19,7 @@ Included in Python:
 * fuzzy string matching, so instead of "Hearst Av. & Le Roy Av." you can just type "hearst leroy"
 * *really* basic web interface: just type ```python web.py``` and go to ```localhost:5000/stop I want predictions for```.
   Go ahead and leave the spaces in!
+* caching of user input strings...lessens the lookup time!
 
 ##Functions
 
