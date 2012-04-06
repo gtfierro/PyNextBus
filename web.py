@@ -3,7 +3,7 @@
 Flask API for nb.py
 '''
 
-import nb
+import nb, json
 from flask import Flask
 app = Flask(__name__)
 
@@ -11,7 +11,7 @@ app = Flask(__name__)
 def get_predictions(stopstring):
   stopstring = stopstring.replace(':',' ')
   s = n.get_stop(stopstring)
-  return str(n.get_prediction(s))
+  return json.dumps(n.get_prediction(s))
 
 if __name__=="__main__":
   n = nb.NB('actransit')

@@ -118,8 +118,9 @@ class NB():
     predictions = []
     for route in self.stops[stop]['routes']:
       html = requests.get(PREDICTION_URL+route).text
-      xml = et.XML(html).getchildren()[0].getchildren()[0]
-      predictions_route = xml.getchildren()
+      xml = et.XML(html).getchildren()[0].getchildren()
+      if len(xml) == 0: continue
+      predictions_route = xml[0].getchildren()
       for p in predictions_route:
         predictions.append( (p.get('minutes'), route) )
     #sort by minutes
