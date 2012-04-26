@@ -4,6 +4,7 @@ Flask API for nb.py
 '''
 
 import nb
+import os
 from flask import Flask, jsonify
 app = Flask(__name__)
 
@@ -25,5 +26,5 @@ def get_stops_for_route(route):
 
 if __name__=="__main__":
   n = nb.NB('actransit')
-  app.debug = True
-  app.run()
+  port = int(os.environ.get('PORT', 5000))
+  app.run(host='0.0.0.0', port=port)
