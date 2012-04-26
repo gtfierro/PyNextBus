@@ -1,4 +1,3 @@
-#!/usr/bin/env Python
 '''
 Flask API for nb.py
 '''

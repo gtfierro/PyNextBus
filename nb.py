@@ -1,4 +1,3 @@
-#!/usr/bin/env Python
 '''
 Library for parsing nextbus's public XML feed
 Eventually I plan to create this as an API using flask
