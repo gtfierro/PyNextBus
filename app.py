@@ -7,6 +7,13 @@ import os
 from flask import Flask, jsonify
 app = Flask(__name__)
 
+@app.route('/')
+def index():
+	return """
+	USAGE:
+		/prediction/"name of stop"
+	"""
+
 @app.route('/prediction/<stopstring>')
 def get_predictions(stopstring):
   stopstring = stopstring.replace(':',' ')
