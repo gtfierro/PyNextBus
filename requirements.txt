@@ -2,5 +2,4 @@ BeautifulSoup==3.2.1
 Flask==0.8
 distribute==0.6.26
 fuzzywuzzy==0.1
-git-remote-helpers==0.1.0
 requests==0.10.7
