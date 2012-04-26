@@ -83,6 +83,21 @@ class NB():
       routes.append(child.get('title'))
     return routes
 
+  def get_stops_for_route(self, route):
+    '''
+    Return a list of stops for the given [route]
+    '''
+    stop_dict = {}
+    html = requests.get(self.SOURCE_URL + "&command=routeConfig&r="+route).text
+    xml = et.XML(html)
+    stops = [child for child in xml.getchildren()[0].getchildren() if child.tag == 'stop']
+    for stop in stops:
+      stopName = stop.get('title')
+      stopID = stop.get('stopId')
+      if stopName not in stop_dict.keys():
+        stop_dict[stopName] = {'stopID':stopID} 
+    return stop_dict
+
   def get_stops(self, routes):
     '''
     Return dict of all stops for all [routes] of format:
