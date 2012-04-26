@@ -95,7 +95,7 @@ class NB():
       stopID = stop.get('stopId')
       if stopName not in stop_dict.keys():
         stop_dict[stopName] = {'stopID':stopID} 
-		return {'stops':stop_dict}
+    return {'stops':stop_dict}
 
   def get_stops(self, routes):
     '''
@@ -121,7 +121,7 @@ class NB():
           stop_dict[stopName] = {'stopID':stopID, 'routes': [route]} 
         else:
           stop_dict[stopName]['routes'].append(route)
-		return {'predictions': stop_dict}
+    return {'predictions': stop_dict}
 
   def get_prediction(self, stop, maxList=3):
     '''
