@@ -26,4 +26,5 @@ def get_stops_for_route(route):
 if __name__=="__main__":
   n = nb.NB('actransit')
   port = int(os.environ.get('PORT', 5000))
+	app.debug(True)
   app.run(host='0.0.0.0', port=port)
