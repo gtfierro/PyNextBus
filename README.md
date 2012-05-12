@@ -17,7 +17,7 @@ Included in Python:
 * indexing by stop (NextBus.com only indexes by the name of the line!)
 * caching of the stop index
 * fuzzy string matching, so instead of "Hearst Av. & Le Roy Av." you can just type "hearst leroy"
-* *really* basic web interface: just type ```python web.py``` and go to ```localhost:5000/stop I want predictions for```.
+* really basic web API
   Go ahead and leave the spaces in!
 * caching of user input strings...lessens the lookup time!
 
@@ -71,24 +71,12 @@ stop = n.get_stop('hearst arch')
 n.get_prediction(stop)
 ```
 
-In web browser:
+*or*
 
-Visit ```localhost:5000/hearst leroy```
+Run ```python app.py```
 
-Will return something along the lines of:
+In web browser (or via command line):
 
-```
-{
-  '0': 
-    {
-      'route': u'52',
-      'arrives': '1 minute(s)'
-    },
-
-  '1': 
-    {
-      'route': u'52',
-      'arrives': '25 minute(s)'
-    }
-}
-```
+* "/prediction/name of stop" >> top 3 predictions for bus arrivals at "name of stop"
+* "/name/name of stop" >> returns the closest matching stop name for your input string
+* "/stops/name of route" >> returns a list of stops for the route matching "name of route"
