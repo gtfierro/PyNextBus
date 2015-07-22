@@ -12,7 +12,7 @@ class NB():
   handles all API calls for a given agency
   '''
 
-  def __init__(self, agency, force_reload = False):
+  def __init__(self, agency='actransit', force_reload = False):
     '''
     checks to see if a file called [.agency] exists. If it does, then we load
     data from that file *unless* force_reload is specified as True. If force_reload is True
@@ -24,7 +24,7 @@ class NB():
       with open("."+agency) as f:
         _jsonfile = json.loads(f.read())
     self.agency = agency
-    self.SOURCE_URL = _jsonfile['SOURCE_URL'] if load else 'http://webservices.nextbus.com/service/publicXMLFeed?a=actransit'
+    self.SOURCE_URL = _jsonfile['SOURCE_URL'] if load else ('http://webservices.nextbus.com/service/publicXMLFeed?a=' + agency)
     self.routes = _jsonfile['routes'] if load else self.get_routes()
     self.stops = _jsonfile['stops'] if load else self.get_stops(self.routes)
     self.cache_file = _jsonfile['cache_file'] if load else ".cache"
@@ -70,16 +70,18 @@ class NB():
 
   def get_routes(self):
     '''
-    Returns a list of all routes for the agency
+    Returns a dictionary of all routes for the agency where the keys are the ids
+    for the routes and the values are the titles of the route corresponding to
+    each route id.
     '''
-    routes = []
+    routes = {}
     ROUTE_LIST_URL = self.SOURCE_URL+'&command=routeList'
     #get html
     html = requests.get(ROUTE_LIST_URL).text
     #get XML tree structure
     xml = et.XML(html)
     for child in xml.getchildren():
-      routes.append(child.get('title'))
+      routes[child.get('tag')] = child.get('title')
     return routes
 
   def get_stops_for_route(self, route):
@@ -119,9 +121,9 @@ class NB():
         stopID = stop.get('stopId')
         if stopName not in stop_dict.keys():
           stop_dict[stopName] = {'stopID':stopID, 'routes': [route]} 
-        else:
+        elif route not in stop_dict[stopName]['routes']:
           stop_dict[stopName]['routes'].append(route)
-    return {'predictions': stop_dict}
+    return stop_dict
 
   def get_prediction(self, stop, maxList=3):
     '''
